@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Store extends Model
+class Order extends Model
 {
     //
 
-     function user()
+    function store()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(Store::class);
     }
 
     function products()

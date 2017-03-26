@@ -20,17 +20,16 @@ Route::get('login/{provider}/callback', 'Auth\RegisterController@handleProviderC
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'StoreController@index');
 
 Route::get('/settings', function () {
     return view('welcome');
 });
 
-Route::resource('/stores', 'StoreController');
+Route::resource('/stores', 'PagesController');
 
 
-Route::get('/dashboard', function(){
-	return view('store.index');
 
-});
+
+
 

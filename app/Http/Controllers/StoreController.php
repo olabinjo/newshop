@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+use Auth;
 use App\Store;
+
 
 
 class StoreController extends Controller
@@ -18,9 +21,21 @@ class StoreController extends Controller
     {
         //
 
-        $stores = Store::where('id',$some_id_value)->get();
+       
 
-        return view('home',['savedStores'=>$stores]);
+        /*$savedStore = Store::where('user_id', '1')->get();
+
+        return View::make('home')->with('savedStores', $savedStore);*/
+
+        //$user = Auth::user();
+        
+        $user = Auth::user();
+        
+        $stores = $user->store()->get();
+        
+        return view('store.index' , compact('stores'));
+
+     
     }
 
     /**
@@ -47,12 +62,13 @@ class StoreController extends Controller
 
         //saving task in database by requesting from form
 
-        $this->validate($request, ['storeName' => 'required|min:5|max:60',]);
+        $this->validate($request, ['storeName' => 'required|min:5|max:60|unique:stores',]);
         $store = new Store;
 
-        $store->name = $request->storeName;
+        $store->storeName = $request->storeName;
         $store->user_id= $request->storeUserID;
         $store->save();
+        
         Session::flash('success', 'Your store has been created');
 
         return redirect()->view('home');

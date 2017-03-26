@@ -71,7 +71,7 @@
                 <div class="x_content">
                   <h4>  Stores</h4>
 
-                  <!--display errors-->
+                  <!--display store creation errors-->
                   @if(count($errors)>0)
                     <div class="alert alert-dancer">
                     <strong>Error:</strong>
@@ -88,22 +88,26 @@
                     </div>
                   @endif
 
+                
+
 
 
 
                   <!--Display stores created by that user -->
 
-                  @if(count($savedStores)>0)
+                  @if(count($stores) >0)
 
-                  @foreach($savedStore as $savedStore)
-                  <p>{{$savedStore -> name}}</p>p>
+    @foreach($stores as $store)
 
-                  @endforeach
+    <p>{{$store -> name}}</p>
 
+    @endforeach
 
+    @endif
 
+                  
 
-                  @endif
+                  
                   
 
                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#storeModal">Create A Store</button>
@@ -117,11 +121,14 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Add a Store</h4>
+
       </div>
       <div class="modal-body">
 
+      
 
-      <form method="POST" role="form" action="{{ route('stores.store') }}">
+
+      <form method="POST" role="form" action="{{ route('stores.store')}}">
                         {{ csrf_field() }}
         <p>Enter the name of your store</p>
 
@@ -130,6 +137,10 @@
     <label for="name">Store Name</label>
     <input type="text" class="form-control" name="storeName" placeholder="Name">
     <input type="hidden" name="storeUserID" value="{{ Auth::user()->id }}">
+
+    
+
+
   </div>
     
       

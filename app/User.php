@@ -32,8 +32,8 @@ class User extends Authenticatable
         return $this->hasMany(SocialProvider::class);
     }
 
-    function stores()
+    function store()
     {
-        return $this->hasMany(Store::class);
+        return $this->hasMany('App\Store');
     }
 }

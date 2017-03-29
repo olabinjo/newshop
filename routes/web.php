@@ -20,13 +20,27 @@ Route::get('login/{provider}/callback', 'Auth\RegisterController@handleProviderC
 
 Auth::routes();
 
-Route::get('/home', 'StoreController@index');
+
 
 Route::get('/settings', function () {
     return view('welcome');
 });
 
-Route::resource('/stores', 'PagesController');
+
+
+Route::group(['middleware' => 'auth'] ,function(){
+
+	Route::resource('/stores', 'StoreController');
+
+	Route::get('/products/{storeName}', ['uses' =>'ProductController@index']);
+
+	Route::get('/home', 'StoreController@index');
+
+	Route::get('/{store_name}/create', 'ProductController@create');
+
+	Route::resource('/product', 'ProductController');
+	
+});
 
 
 

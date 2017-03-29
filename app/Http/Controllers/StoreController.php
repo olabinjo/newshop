@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate;
 
 use App\Http\Requests;
 use Auth;
 use App\Store;
-
+use Session;
 
 
 class StoreController extends Controller
@@ -60,7 +61,7 @@ class StoreController extends Controller
         
 
 
-        //saving task in database by requesting from form
+        //saving store in database by requesting from form
 
         $this->validate($request, ['storeName' => 'required|min:5|max:60|unique:stores',]);
         $store = new Store;

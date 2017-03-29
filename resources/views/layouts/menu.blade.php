@@ -8,23 +8,23 @@
     <title></title>
 
     <!-- Bootstrap -->
-    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <!-- NProgress -->
-    <link href=".vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="{{ asset('vendors/nprogress/nprogress.css')}}" rel="stylesheet">
     <!-- iCheck -->
-    <link href="vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="{{ asset('vendors/iCheck/skins/flat/green.css')}}" rel="stylesheet">
     
     <!-- bootstrap-progressbar -->
-    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <link href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css')}}" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="{{ asset('build/css/custom.min.css')}}" rel="stylesheet">
 
     <script>
         window.Laravel = {!! json_encode([
@@ -112,11 +112,9 @@ include ('auth.register.blade.php');
             </div>
             <!-- /sidebar menu -->
 
-            <!-- /menu footer buttons -->
-            
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
+          
+          </div><!--End left scroll view-->
+        </div><!--End col md 3-->
 
         <!-- top navigation -->
         <div class="top_nav">
@@ -220,16 +218,15 @@ include ('auth.register.blade.php');
             </nav>
           </div>
         </div>
-        <!-- /top navigation -->
-        </li>
-        </ul>
-       </div>
-      </div>
-    </div>
+        <!-- end top navigation -->
   </div>
- </div>
-</div>
+</div>    
 
-</body>
+
+
 @endif
 @yield('menu')        
+
+
+
+

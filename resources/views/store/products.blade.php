@@ -16,7 +16,7 @@
 
  				<div class="row"> 
 					<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
-                         <div class="x_panel tile fixed_height_320">
+                         <div class="x_panel tile">
                           <div class="x_title">
                              <div class="page-header">
   					            <h1>Products</h1>
@@ -64,7 +64,7 @@
                  <td>{{$product-> updated_at}} </td>
                  <td>{{$product-> created_at}} </td>
                  <td>{{$product-> status}} </td>
-                 <td><a href="{{url('product/'.$product->id.'/edit')}}" class="btn btn-warning"><span class="fa fa-edit"></span></a></td>
+                 <td><a href="{{url('product/'.$store_name.'/'.$product->id.'/edit')}}" class="btn btn-warning"><span class="fa fa-edit"></span></a></td>
 
 
                  </tr>

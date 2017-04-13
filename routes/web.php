@@ -39,8 +39,12 @@ Route::group(['middleware' => 'auth'] ,function(){
 	Route::get('/{store_name}/create', 'ProductController@create');
 
 	Route::resource('/product', 'ProductController');
+
+	Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
 	
 });
+
+Route::resource('productimage', 'ProductImageController');
 
 
 

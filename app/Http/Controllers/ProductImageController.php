@@ -27,6 +27,10 @@ class ProductImageController extends Controller
     public function create()
     {
         //
+
+        $images = Productimage::all();
+
+        return view('images.create', compact('images'));
     }
 
     /**
@@ -97,7 +101,7 @@ class ProductImageController extends Controller
 
    flash()->success('Product Image Created!');
 
-   return redirect()->route('productimage.show', [$productImage]);
+   return redirect()->route('images.show', [$productImage]);
        
     }
 
@@ -122,7 +126,7 @@ class ProductImageController extends Controller
     {
         $productImage = Productimage::findOrFail($id);
 
-        return view('productimage.edit', compact('productImage'));
+        return view('images.edit', compact('productImage'));
     }
 
     /**
@@ -132,10 +136,58 @@ class ProductImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditImageRequest $request, $id)
     {
         //
-    }
+
+        $productImage = Productimage::findOrFail($id);
+
+   $productImage->is_active = $request->get('is_active');
+   $productImage->is_featured = $request->get('is_featured');
+
+   $this->formatCheckboxValue($productImage);
+   $productImage->save();
+
+   if ( ! empty(Input::file('image'))){
+
+       $destinationFolder = '/imgs/product/';
+       $destinationThumbnail = '/imgs/product/thumbnails/';
+
+       $file = Input::file('image');
+
+       $imageName = $productImage->image_name;
+       $extension = $request->file('image')->getClientOriginalExtension();
+
+       //create instance of image from temp upload
+       $image = Image::make($file->getRealPath());
+
+       //save image with thumbnail
+       $image->save(public_path() . $destinationFolder . $imageName . '.' . $extension)
+           ->resize(60, 60)
+           // ->greyscale()
+           ->save(public_path() . $destinationThumbnail . 'thumb-' . $imageName . '.' . $extension);
+
+   }
+
+   if ( ! empty(Input::file('mobile_image'))) {
+
+       $destinationMobile = '/imgs/marketing/mobile/';
+       $mobileFile = Input::file('mobile_image');
+
+       $mobileImageName = $productImage->mobile_image_name;
+       $mobileExtension = $request->file('mobile_image')->getClientOriginalExtension();
+
+       //create instance of image from temp upload
+       $mobileImage = Image::make($mobileFile->getRealPath());
+       $mobileImage->save(public_path() . $destinationMobile . $mobileImageName . '.' . $mobileExtension);
+   }
+
+   flash()->success('image edited!');
+   return view('images.edit', compact('marketingImage'));
+}
+
+    
+
 
     /**
      * Remove the specified resource from storage.
@@ -145,6 +197,24 @@ class ProductImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $productImage = Productimage::findOrFail($id);
+   $thumbPath = $productImage->image_path.'thumbnails/';
+
+   File::delete(public_path($productImage->image_path).
+                            $productImage->image_name . '.' .
+                            $productImage->image_extension);
+
+   File::delete(public_path($productImage->mobile_image_path).
+                            $productImage->mobile_image_name . '.' .
+                            $productImage->mobile_extension);
+   File::delete(public_path($thumbPath). 'thumb-' .
+                            $productImage->image_name . '.' .
+                            $productImage->image_extension);
+
+    Marketingimage::destroy($id);
+
+   flash()->success('image deleted!');
+
+   return redirect()->route('images.index');
     }
 }

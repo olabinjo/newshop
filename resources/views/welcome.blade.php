@@ -61,7 +61,7 @@
       <!-- Three columns of text highlighting features of the application -->
       <div class="row">
         <div class="col-lg-4">
-          <img class="img-circle" src="img/payments.png" alt="Generic placeholder image" width="140" height="140">
+          <img class="img-circle" src="img/payment.png" alt="Generic placeholder image" width="140" height="140">
           <h2>Accept Payments</h2>
           <p>You never have to worry about payments. GHShop will handle payments via mobile money for you. All you need to do is upload items and set prices. </p>
           <p></p>

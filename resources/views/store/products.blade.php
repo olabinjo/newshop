@@ -20,7 +20,7 @@
                           <div class="x_title">
                              <div class="page-header">
   					            <h1>Products</h1>
-  					            <button type="button" class="btn btn-info btn-lg"><a href="/{{$store_name}}/create">Create A Product</a></button>
+  					            <button type="button" class="btn btn-info btn-lg"><a href="/{{$store_name}}/creating">Create A Product</a></button>
   					            
 							</div>
                             

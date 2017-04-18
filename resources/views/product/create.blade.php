@@ -114,16 +114,63 @@
                                                             @endif
                                                         </div>  
 
+                                                        
+
+                                                        
+                  <br>
+                  <br>
+
+                                                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#imageModal">Add Images</button><!--Button to open image modal-->
+
+                                                  <br><br>
+
+
+                                      <!-- Modal -->
+                                        <div id="imageModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+
+                                          <!-- Modal to display User's images and handle upload of new images -->
+                                          <div class="modal-content">
+                                              <!-- Start modal's header-->
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Your Images</h4>
+                                                </div>
+                                                <!--End modal's header-->
+                                                <!--Start modal body-->
+                                                        <div class="modal-body">
+
+                                                      <form method="POST" role="form" action="{{ route('stores.store') }}">
+                                                      {{ csrf_field() }}
+                                                  
+
+
                                                         <label class="btn btn-default btn-file">
-                                                        Add Images <input type="file" style="display: none;">
+                                                        Upload <input type="file" style="display: none;">
                                                         </label>
-
-                                                        <br><br/>
-
-                                                        
+    
+      
+      
+                                                      <button type="submit" class="btn btn-success" >Add to Product</button>
+        
+      
+                                                    </form>
+        
                                                   </div>
-                                                        
-                                
+
+                                            <!--End modal body-->
+
+                                                          <!---Start modal footer-->
+                                                          <div class="modal-footer">
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                                          <br><br/>
+                                                          </div>
+                                                          <!--End modal footer-->
+                                                  </div><!--End content in modal-->
+                                                  </div><!--End modal dialog -->
+                                                  </div><!--- End modal -->
+
                                                     <input type="submit" name="submit" class="btn btn-default"value="draft">
 
                                                     <input type="submit" name="submit" class="btn btn-success" value="publish">
@@ -133,7 +180,16 @@
                                                       <!--<button type="submit" name="submit" class="btn btn-success" value="publish" >Publish</button>-->
         
       
-                                                </form>
+                                              
+
+                                    
+
+                  </div><!--End form group class-->
+                  </form> <!--- End form-->
+
+                  
+                                
+                                                    
 
                 
 
@@ -159,7 +215,7 @@
                                       
                                         
                     </div><!--End panel tile-->
-                  <!--</div>--> 
+                  
  	
                 </div>
 
@@ -168,6 +224,18 @@
 
 </body>
 
+ <!-- jQuery -->
+ 
+    <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('vendors/fastclick/lib/fastclick.js')}}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('vendors/nprogress/nprogress.js')}}"></script>
+    <!-- Chart.js -->
+    <script src="{{ asset('vendors/Chart.js/dist/Chart.min.js')}}"></script>
+    <!-- gauge.js -->
 
 
 

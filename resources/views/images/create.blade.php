@@ -3,7 +3,7 @@
 
 @section('content')
 
-    {!! Breadcrumb::withLinks(['Home' => '/', 'product images' => '/productimage', 'create']) !!}
+    
 
      <h1>Upload a Photo </h1>
 
@@ -11,12 +11,12 @@
      <hr/>
 
      @if (count($errors) > 0)
-	 <div class="alert alert-danger">
-	 <strong>Whoops! </strong> There were some problems with your input. <br> <br>
-	 <ul>
-	     @foreach ($errors->all() as $error)
-		 <li>{{ $error }} </li>
-	     @endforeach
+     <div class="alert alert-danger">
+     <strong>Whoops! </strong> There were some problems with your input. <br> <br>
+     <ul>
+         @foreach ($errors->all() as $error)
+         <li>{{ $error }} </li>
+         @endforeach
 
          </ul>
          </div>
@@ -24,7 +24,7 @@
     @endif
 
 
-    {!! Form::open(array('route' => 'productimage.store', 'class' => 'form', 'files' => true)) !!}
+    {!! Form::open(array('route' => 'image.store', 'class' => 'form', 'files' => true)) !!}
 
      <!-- image name Form Input -->
      <div class="form-group">

@@ -36,15 +36,22 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::get('/home', 'StoreController@index');
 
-	Route::get('/{store_name}/create', 'ProductController@create');
 
-	Route::resource('/product', 'ProductController');
+/*Route below was changed to not conflict with other create methods*/
+	Route::get('/{store_name}/creating', 'ProductController@create');
+
+
+	Route::resource('product', 'ProductController');
 
 	Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
+
+	Route::resource('image', 'ProductImageController');
+
+
 	
 });
 
-Route::resource('productimage', 'ProductImageController');
+
 
 
 

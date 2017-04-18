@@ -9,7 +9,7 @@
             <!-- Default panel contents -->
             <div class="panel-heading">List of Marketing Images </div>
             <div class="panel-body">
-            <a href="/productimage/create"> <button type="button" class="btn btn-lg btn-success">
+            <a href="/image/create"> <button type="button" class="btn btn-lg btn-success">
                      Create New </button> </a>
             </div>
 
@@ -33,7 +33,7 @@
                         <td>  <a href="/productimage/{{ $image->id }}/edit">
                                 <span class="glyphicon glyphicon-edit"          
                                  aria-hidden="true"> </span> </a> </td>
-                        <td>{!! Form::model($image, ['route' => ['productimage.destroy', $image->id],
+                        <td>{!! Form::model($image, ['route' => ['image.destroy', $image->id],
                                     'method' => 'DELETE'
                       ]) !!}
                         <div class="form-group">

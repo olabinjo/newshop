@@ -10,6 +10,7 @@ use Auth;
 use App\Store;
 use Session;
 use App\Product;
+use App\Upload;
 
 class ProductController extends Controller
 {
@@ -26,6 +27,7 @@ class ProductController extends Controller
         
       
         $products = Product::where('store_name', $storeName)->get();
+
 
        
 
@@ -49,7 +51,12 @@ class ProductController extends Controller
 
         $store_name = $store_name;
 
-        return view('product.create', compact('store_name'));
+        $userID = Auth::user()->id;
+    
+
+    $images = Upload::where('storeUserID', $userID)->get();
+
+        return view('product.create', compact('store_name', 'images'));
     }
 
     /**

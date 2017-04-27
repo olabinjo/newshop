@@ -120,7 +120,24 @@
                   <br>
                   <br>
 
-                                                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#imageModal">Add Images</button><!--Button to open image modal-->
+                                                  
+                                                    <input type="submit" name="submit" class="btn btn-default"value="draft">
+
+                                                    <input type="submit" name="submit" class="btn btn-success" value="publish">
+
+                                                    
+      
+                                                      <!--<button type="submit" name="submit" class="btn btn-success" value="publish" >Publish</button>-->
+        
+      
+                                              
+
+                                    
+
+                  </div><!--End form group class-->
+                  </form> <!--- End form-->
+
+                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#imageModal">Add Images</button><!--Button to open image modal-->
 
                                                   <br><br>
 
@@ -140,18 +157,79 @@
                                                 <!--Start modal body-->
                                                         <div class="modal-body">
 
-                                                      <form method="POST" role="form" action="{{ route('stores.store') }}">
+                                                      
                                                       {{ csrf_field() }}
+
+                                                      <div class="container">
+                                          @if(Session::has('success'))
+                                      <div class="alert-box success">
+                                       <h2>{!! Session::get('success') !!}</h2>
+          
+                                      </div>
+                                    @endif
+
+                                   
+
+                       @foreach($images as $image)
+
+                       
+
+                       
+
+                       
+
+
+                      <img src="/uploads/{{$image-> original_filename}}" width="100px" height="100px">
+
+
+
+                       
+
+
+                       
+
+
+                       @endforeach
+
+                       <br/><br>
+        
+
+                                    <div class="form-group">
+                                  
+                                {!!Form::open(array('url'=>'upload/uploadFiles', 'method'=>'Post','files'=>true)) !!}
+                                  {!! Form::file('images[]', array('multiple'=>true)) !!}
+
+                                <p>{!! $errors->first('images') !!}</p>
+                                @if(Session::has('error'))
+
+                                <p>{!! Session::get('error')!!}</p>
+
+                                @endif
+                                <input type="hidden" name="storeUserID" value="{{ Auth::user()->id }}">
+
+
+
+
+                              {!! Form::submit('Upload', array('class'=>'btn btn-default btn-file')) !!}
+
+                              <button type="submit" class="btn btn-success" >Add to Product</button>
+
+                              {!! Form:: close()!!}
+        
+
+
+                                  </div>
+
+      </div>
+  
                                                   
 
 
-                                                        <label class="btn btn-default btn-file">
-                                                        Upload <input type="file" style="display: none;">
-                                                        </label>
+                                                        
     
       
       
-                                                      <button type="submit" class="btn btn-success" >Add to Product</button>
+                                                      
         
       
                                                     </form>
@@ -171,21 +249,6 @@
                                                   </div><!--End modal dialog -->
                                                   </div><!--- End modal -->
 
-                                                    <input type="submit" name="submit" class="btn btn-default"value="draft">
-
-                                                    <input type="submit" name="submit" class="btn btn-success" value="publish">
-
-                                                    
-      
-                                                      <!--<button type="submit" name="submit" class="btn btn-success" value="publish" >Publish</button>-->
-        
-      
-                                              
-
-                                    
-
-                  </div><!--End form group class-->
-                  </form> <!--- End form-->
 
                   
                                 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoresTable extends Migration
+class CreateUploadTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,14 @@ class CreateStoresTable extends Migration
     public function up()
     {
         //
-        Schema::create('stores', function (Blueprint $table) {
+
+        Schema::create('uploads', function (Blueprint $table) { 
             $table->increments('id');
-            $table->string('storeName')->unique();
-             $table->integer('user_id')->unsigned()->references('id')->on('users');
-            $table->timestamps();
+        $table->string('filename');
+        $table->string('product_id');
+        $table->string('mime');
+        $table->string('original_filename');
+        $table->timestamps();
         });
     }
 
@@ -30,5 +33,7 @@ class CreateStoresTable extends Migration
     public function down()
     {
         //
+
+        Schema::drop('uploads');
     }
 }

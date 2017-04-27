@@ -15,15 +15,10 @@ class CreateProductimagesTable extends Migration
     {
         Schema::create('productimages', function (Blueprint $table) {
             $table->increments('id');
-        $table->boolean('is_active')->default(false);
-        $table->boolean('is_featured')->default(false);
-        $table->string('image_name')->unique();
-        $table->string('image_path');
+        $table->string('filename');
         $table->string('product_id');
-        $table->string('image_extension', 10);
-        $table->string('mobile_image_name')->unique();
-        $table->string('mobile_image_path');
-        $table->string('mobile_extension', 10);
+        $table->string('mime');
+        $table->string('original_filename');
         $table->timestamps();
         });
     }

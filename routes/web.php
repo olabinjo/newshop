@@ -47,6 +47,9 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::resource('image', 'ProductImageController');
 
+	Route::get('upload', 'UploadController@index');
+	Route::post('upload/uploadFiles','uploadController@multiple_upload');
+
 
 	
 });

@@ -1,9 +1,8 @@
-
 @extends('layouts.app')
 
 @section('content')
 
-    
+   
 
      <h1>Upload a Photo </h1>
 

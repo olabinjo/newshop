@@ -12,9 +12,9 @@ class ProductImageController extends Controller
 
     public function index()
     {
-        $images = Productimage::all();
+        //$images = Productimage::all();
 
-   return view('images.index', compact('images'));
+   return view('images.newindex');
 
      
     }

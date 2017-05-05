@@ -11,6 +11,8 @@ use App\Store;
 use Session;
 use App\Product;
 use App\Upload;
+use Redirect;
+use View;
 
 class ProductController extends Controller
 {
@@ -20,20 +22,20 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($storeName)
+    public function index($store_name)
     {
 
     	
         
       
-        $products = Product::where('store_name', $storeName)->get();
+        $products = Product::where('store_name', $store_name)->get();
 
 
        
 
 
 
-        $store_name = $storeName;
+        $store_name = $store_name;
         
         return view('store.products' , compact('products', 'store_name'));
 
@@ -77,15 +79,20 @@ class ProductController extends Controller
       $this->validate($request, ['product_name' => 'required|min:3|max:100|', 'category' => 'required|min:5|max:60', 'description' => 'required|min:5|max:10000', 'price' => 'required|min:1|max:100', 'amount'=>'required|min:1|max:20']);
         $product = new Product;
 
-        //create new store
+        $product->product_name = $request->input('product_name');
+        $product->store_name = $request->input('store_name');
+        $product->description = $request->input('description');
+        $product->category = $request->input('category');
+        $product->user_id = Auth::user()->id;
         
+       
 
-        $product->product_name = $request->product_name;
+        /*$product->product_name = $request->product_name;
         $product->store_name = $request->store_name;
-        $storeName=$request->store_name;
+        $store_name=$request->store_name;
         $product->description = $request->description;
         $product->category = $request->category;
-        $product->user_id= Auth::user()->id;
+        $product->user_id= Auth::user()->id;*/
 
         if($request->submit == 'draft')
         {
@@ -97,27 +104,20 @@ class ProductController extends Controller
         	$product->status = 'published';
         }
 
-   /*switch($request->submit) {
-
-    case 'draft': 
-        
-    break;
-
-    case 'publish': 
-        $product->status = 'published';
-    break;
-}*/
+   
 
 
         
-        $product->price = $request->price;
-        $product->amount = $request->amount;
+        
         $product->save();
         
-        Session::flash('success', 'Your store has been created');
+        Session::flash('success', 'Your product has been added to the store');
 
-        return route('/products'.'/'.'{$storeName}');
-    }
+       
+
+        //return redirect()->route('store_name', $store_name);
+
+}
 
     /**
      * Display the specified resource.

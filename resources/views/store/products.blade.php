@@ -20,7 +20,15 @@
                           <div class="x_title">
                              <div class="page-header">
   					            <h1>Products</h1>
+
   					            <button type="button" class="btn btn-info btn-lg"><a href="/{{$store_name}}/creating">Create A Product</a></button>
+
+                                @if(Session::has('success'))
+                                      <div class="alert-box success">
+                                       <h2>{!! Session::get('success') !!}</h2>
+          
+                                      </div>
+                                    @endif
   					            
 							</div>
                             

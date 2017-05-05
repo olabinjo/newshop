@@ -17,9 +17,7 @@ class uploadController extends Controller
 {
   public function index(){
 
-  	
-
-  	return view('product.create', compact('images'));
+    
   }
 
   public function multiple_upload(Request $request)
@@ -42,9 +40,16 @@ class uploadController extends Controller
   			$upload_success = $file->move($destinationPath, $filename);
   			$uploadcount ++;
 
+        //pull required data from Product form to return to page
+
+        $product_name = $request->product_name;
+
   			//save into database
   			$extension = $file->getClientOriginalExtension();
   			$entry = new Upload();
+        $store_name = $request->store_name;
+
+
   			$entry->mime = $file->getClientMimeType();
   			$entry->storeUserID = $request->storeUserID;
   			$entry->original_filename= $filename;
@@ -56,12 +61,15 @@ class uploadController extends Controller
   	}
 
   	if($uploadcount == $file_count){
-  		Session::flash('success', 'Upload successfully');
-  		return Redirect::to('upload');
+  		Session::flash('success', 'Upload successful');
+  		return Redirect::back()->with('product_name'); //popup image modal box after successful upload
   	} else{
-  		return Redirect::to('upload')->withInput()->withErrors($validator);
+      Session::flash('fail', 'Image could not be uploaded. Try again');
+  		return Redirect::to('/' .'{$store_name}'. '/creating')->withInput()->withErrors($validator);
 
   	}
   }
 
 }
+
+/*Pass form data to this upload controller and return it into the view*/

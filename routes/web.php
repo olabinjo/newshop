@@ -32,7 +32,9 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::resource('/stores', 'StoreController');
 
-	Route::get('/products/{storeName}', ['uses' =>'ProductController@index']);
+	
+
+	
 
 	Route::get('/home', 'StoreController@index');
 
@@ -43,7 +45,11 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::resource('product', 'ProductController');
 
+	
+
+	Route::get('products/{store_name}', ['as'=>'store_name', 'uses'=>'ProductController@index']);
 	Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
+
 
 	Route::resource('image', 'ProductImageController');
 

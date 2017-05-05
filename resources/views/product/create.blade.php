@@ -26,13 +26,18 @@
                          </div>
                 <div class="x_content">
 
-                 <form method="POST" role="form" action="{{ route('product.store') }}">
+                 <form role="form" method="post" id="productform" action="">
                                                       {{ csrf_field() }}
                                                   
 
 
-                                                  <div class="form-group">
-                                                      
+                                                  <div class="form-group" >
+                                                      @if(Session::has('success'))
+                                      <div class="alert-box success">
+                                       <h2>{!! Session::get('success') !!}</h2>
+          
+                                      </div>
+                                    @endif
                                                       <div class="col-md-6 col-sm-6 col-xs-12">
                                                       <label for="product_name">Product name</label>
                                                         <input type="text" size="20" class="form-control col-md-7 col-xs-12" name="product_name" placeholder="Name of Product" required="required">
@@ -45,6 +50,14 @@
                                                             </span>
                                                             @endif
                                                           <input type="hidden" name="storeUserID" value="{{ Auth::user()->id }}">
+                                                          <input type="hidden" name="store_name" value="{{$store_name}}">
+
+                                                          {{$store_name}}
+
+                                                         
+
+                                                        
+
 
                                                           <br/><br/>
 
@@ -121,9 +134,9 @@
                   <br>
 
                                                   
-                                                    <input type="submit" name="submit" class="btn btn-default"value="draft">
+                                                    <input type="submit" name="submit" id="submit" class="btn btn-default"value="draft">
 
-                                                    <input type="submit" name="submit" class="btn btn-success" value="publish">
+                                                    <input type="submit" name="submit" id="submit" class="btn btn-success" value="publish">
 
                                                     
       
@@ -137,14 +150,74 @@
                   </div><!--End form group class-->
                   </form> <!--- End form-->
 
+                   <script type="text/javascript">
+
+
+                   $('#productform').on('click', function(e) {
+  e.preventDefault();
+
+  var data = $('#form').serialize();
+
+  saveProductToDB(data);
+});
+
+function saveProductToDB(data){
+
+  
+
+$(function() {
+    $.ajax({
+      method: "post",
+      url: "/product/store",
+      data: {
+        _token: $('meta[name=csrf-token]').attr('content'),
+        product_name: product_name,
+                 description: description,
+                 category: category,
+                 size: size,
+                 amount: amount,
+                 price: price,
+                 submit: submit,
+                 store_name:store_name,
+      },
+      success: function(response) {
+        alert(response);
+      }
+    })
+  }
+                           
+}
+</script>
+
+                    <!--Re-Open modal after successful upload of images-->
+
+
+                                    @if(!empty(Session::get('error_code'))&&Session::get('error_code')==5)
+                                    <script>
+                                    $(function(){
+                                        $('imageModal').modal('show');
+
+
+                                     });
+                                      
+
+
+                                    </script>
+                                    @endif
+
                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#imageModal">Add Images</button><!--Button to open image modal-->
 
                                                   <br><br>
 
 
+
                                       <!-- Modal -->
                                         <div id="imageModal" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
+
+
+
+                                        
 
                                           <!-- Modal to display User's images and handle upload of new images -->
                                           <div class="modal-content">
@@ -152,6 +225,7 @@
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     <h4 class="modal-title">Your Images</h4>
+                                                    {{$store_name}}
                                                 </div>
                                                 <!--End modal's header-->
                                                 <!--Start modal body-->
@@ -169,6 +243,10 @@
                                     @endif
 
                                    
+                                   <div class="images">
+                                     
+
+                                   
 
                        @foreach($images as $image)
 
@@ -179,7 +257,10 @@
                        
 
 
-                      <img src="/uploads/{{$image-> original_filename}}" width="100px" height="100px">
+                      <img class="image" src="/uploads/{{$image-> original_filename}}" width="100px" height="100px">
+                      
+
+
 
 
 
@@ -191,12 +272,22 @@
 
                        @endforeach
 
+                       </div>
+
+                       <input type="hidden" name="imageID" id="selectedIDs">
+
+
+
+                       
+
                        <br/><br>
+
+                       
         
 
                                     <div class="form-group">
                                   
-                                {!!Form::open(array('url'=>'upload/uploadFiles', 'method'=>'Post','files'=>true)) !!}
+                                {!!Form::open(array('url'=>'upload/uploadFiles', 'method'=>'Post','files'=>true, 'required'=>'required')) !!}
                                   {!! Form::file('images[]', array('multiple'=>true)) !!}
 
                                 <p>{!! $errors->first('images') !!}</p>
@@ -206,6 +297,7 @@
 
                                 @endif
                                 <input type="hidden" name="storeUserID" value="{{ Auth::user()->id }}">
+                                                                        <input type="hidden" name="store_name" value="{{$store_name}}">
 
 
 
@@ -284,6 +376,73 @@
 
                  
  </div>
+
+
+
+ <script type="text/javascript">
+                       window.addEventListener('load', function(){
+
+                        var images = document.querySelectorAll('.image');
+                        for(var i=0; i < images.length; i++){
+                           images[i].addEventListener('click', function(e){
+                             var selected = document.querySelectorAll('.image.selected');
+
+
+                             if(e.target.classList.contains('selected')){
+
+                               e.target.classList.remove('selected');
+                               removeID(e.target.id);
+                             }
+
+                             else if(!(selected && selected.length >= 4)){
+
+                               e.target.classList.add('selected');
+                               addID(e.target.id);
+
+                      
+
+
+
+
+                             }
+
+
+                           });
+                        }
+
+
+                       });
+
+                       function addID(id){
+                        var oldValue = document.getElementByID('selectedIDs').value;
+                        if(oldValue.trim() ==""){
+                            document.getElementByID('selectedIDs').VALUE = id;
+
+                        } else{
+                            document.getElementByID('selectedIDs').value = oldValue + ',' +id;
+                        }
+
+                         
+                        }
+
+                        function removeID(id){
+                           var ids = document.getElementByID('selectedIDs').value.split(',');
+                           for(var i=0; i < ids.length; i++){
+                                if(ids[i] == id){
+                                   ids.splice(i,1);
+                                }
+                           }
+                           var newValue = '';
+                           for (var i = 0; i < ids.length; i++) {
+                             if(i != length-1){
+                              newValue = newVlaue + ',';
+                             }
+                           }
+                           document.getElementByID('selectedIDs').value = newValue
+                        }
+
+                       </script>
+                       
 
 </body>
 

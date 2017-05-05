@@ -25,6 +25,19 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('build/css/custom.min.css')}}" rel="stylesheet">
+    
+    <style type="text/css">
+      .image{
+        border:4px solid #777;
+        cursor: pointer;
+      }
+
+      .image.selected{
+        border: 4px solid red;
+      }
+
+
+    </style>
 
     <script>
         window.Laravel = {!! json_encode([

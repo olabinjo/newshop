@@ -36,6 +36,9 @@
         border: 4px solid red;
       }
 
+      .images .image{
+        margin: 10px;
+      }
 
     </style>
 
@@ -44,6 +47,9 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+  <!-- jQuery -->
+  <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
   </head>
 @if (Auth::guest())
 

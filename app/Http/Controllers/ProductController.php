@@ -25,21 +25,15 @@ class ProductController extends Controller
     public function index($store_name)
     {
 
-    	
-        
-      
+
         $products = Product::where('store_name', $store_name)->get();
 
 
-       
-
-
-
         $store_name = $store_name;
-        
-        return view('store.products' , compact('products', 'store_name'));
 
-     
+        return view('store.products', compact('products', 'store_name'));
+
+
     }
 
     /**
@@ -54,9 +48,9 @@ class ProductController extends Controller
         $store_name = $store_name;
 
         $userID = Auth::user()->id;
-    
 
-    $images = Upload::where('storeUserID', $userID)->get();
+
+        $images = Upload::where('storeUserID', $userID)->get();
 
         return view('product.create', compact('store_name', 'images'));
     }
@@ -64,19 +58,16 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        
-        
 
 
-        
         //saving product in database by requesting from form
 
-      $this->validate($request, ['product_name' => 'required|min:3|max:100|', 'category' => 'required|min:5|max:60', 'description' => 'required|min:5|max:10000', 'price' => 'required|min:1|max:100', 'amount'=>'required|min:1|max:20']);
+        $this->validate($request, ['product_name' => 'required|min:3|max:100|', 'category' => 'required|min:5|max:60', 'description' => 'required|min:5|max:10000', 'price' => 'required|min:1|max:100', 'amount' => 'required|min:1|max:20']);
         $product = new Product;
 
         $product->product_name = $request->input('product_name');
@@ -84,8 +75,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->category = $request->input('category');
         $product->user_id = Auth::user()->id;
-        
-       
+
 
         /*$product->product_name = $request->product_name;
         $product->store_name = $request->store_name;
@@ -94,35 +84,26 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->user_id= Auth::user()->id;*/
 
-        if($request->submit == 'draft')
-        {
-        	$product->status = 'draft';
+        if ($request->submit == 'draft') {
+            $product->status = 'draft';
+        } elseif ($request->submit == 'publish') {
+            $product->status = 'published';
         }
 
-        elseif ($request->submit == 'publish')
-        {
-        	$product->status = 'published';
-        }
 
-   
-
-
-        
-        
         $product->save();
-        
+
         Session::flash('success', 'Your product has been added to the store');
 
-       
 
         //return redirect()->route('store_name', $store_name);
 
-}
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -133,14 +114,14 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id, $store_name)
     {
         //
 
-        
+
         $product = Product::find($id);
         $store_name = $store_name;
 
@@ -150,8 +131,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -162,7 +143,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -172,38 +153,36 @@ class ProductController extends Controller
 
     public function draft(Request $request)
     {
-        
-        
 
 
         //saving product in database by requesting from form
 
-     /* $this->validate($request, ['product_name' => 'required|min:3|max:100|', 'category' => 'required|min:5|max:60', 'description' => 'required|min:5|max:10000', 'price' => 'required|min:1|max:100', 'amount'=>'required|min:1|max:20']);
-        $product = new Product;
+        /* $this->validate($request, ['product_name' => 'required|min:3|max:100|', 'category' => 'required|min:5|max:60', 'description' => 'required|min:5|max:10000', 'price' => 'required|min:1|max:100', 'amount'=>'required|min:1|max:20']);
+           $product = new Product;
 
-        //create new store
-        
-
-        $product->product_name = $request->product_name;
-        $product->store_name = Store::store()->storeName;
-        $product->description = $request->description;
-        $product->category = $request->category;
-        $product->user_id= Auth::user()->id;
-
-if(Input::get('submit') == 'draft') {
-           $product->status = 'draft';
-        } elseif(Input::get('submit') == 'publish') {
-           $product->status = 'published';
-        }
+           //create new store
 
 
-        
-        $product->price = $request->price;
-        $product->amount = $request->amount;
-        $product->save();
-        
-        Session::flash('success', 'Your store has been created');
+           $product->product_name = $request->product_name;
+           $product->store_name = Store::store()->storeName;
+           $product->description = $request->description;
+           $product->category = $request->category;
+           $product->user_id= Auth::user()->id;
 
-        return view('store.index');*/
+   if(Input::get('submit') == 'draft') {
+              $product->status = 'draft';
+           } elseif(Input::get('submit') == 'publish') {
+              $product->status = 'published';
+           }
+
+
+
+           $product->price = $request->price;
+           $product->amount = $request->amount;
+           $product->save();
+
+           Session::flash('success', 'Your store has been created');
+
+           return view('store.index');*/
     }
 }

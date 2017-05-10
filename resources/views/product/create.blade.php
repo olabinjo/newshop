@@ -150,21 +150,28 @@
                                                 class="btn btn-success">
                                             Search You Tube to embed youtube video
                                         </button>
+
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#imageModal">
+                                            Add Images
+                                        </button><!--Button to open image modal-->
                                     </label>
+
                                     <br/><br/>
                                 </div>
                                 <div id="search-container">
                                 </div>
 
-
-                                <input type="submit" name="submit" id="submit" class="btn btn-default" value="draft">
-
-                                <input type="submit" name="submit" id="productform" class="btn btn-success"
-                                       value="publish">
+                                <div id="add-image-container" class="images"></div>
 
 
                                 <!--<button type="submit" name="submit" class="btn btn-success" value="publish" >Publish</button>-->
 
+
+                                    <input type="submit" name="submit" id="submit" class="btn btn-default btn-large" value="Draft">
+
+                                    <input type="submit" name="submit" id="productform" class="btn btn-success btn-large"
+                                           value="Publish">
 
                             </div><!--End form group class-->
                         </form> <!--- End form-->
@@ -208,9 +215,6 @@
                             </script>
                         @endif
 
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#imageModal">
-                            Add Images
-                        </button><!--Button to open image modal-->
 
                         <br><br>
 
@@ -221,7 +225,7 @@
 
 
                                 <!-- Modal to display User's images and handle upload of new images -->
-                                <div class="modal-content">
+                                <div class="modal-content" id="add_image_modal">
                                     <!-- Start modal's header-->
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -274,7 +278,9 @@
 
                                                 {!! Form::submit('Upload', array('class'=>'btn btn-default btn-file')) !!}
 
-                                                <button type="submit" class="btn btn-success">Add to Product</button>
+                                                <button type="button" class="btn btn-success" id="add_images_to_product"
+                                                        data-dismiss="modal">Add to Product
+                                                </button>
 
                                                 {!! Form:: close()!!}
 
@@ -308,8 +314,6 @@
                     var images = document.querySelectorAll('.image');
                     for (var i = 0; i < images.length; i++) {
                         images[i].addEventListener('click', function (e) {
-                            var images_array = [];
-
                             var selected = document.querySelectorAll('.image.selected');
                             if (e.target.classList.contains('selected')) {
                                 e.target.classList.remove('selected');
@@ -319,12 +323,6 @@
                                 e.target.classList.add('selected');
                                 addID(e.target.id);
                             }
-
-                            $(".image.selected").each(function () {
-                                images_array.push($(this).data('id'));
-                            });
-
-                            $("#product_images").val(images_array.join());
                         });
                     }
                 }
@@ -396,6 +394,19 @@
             <script>
                 window.addEventListener('load', function () {
                     init();
+
+                    $("#add_images_to_product").click(function () {
+                        $("add-image-container").html('');
+                        var images_array = [];
+
+                        $(".image.selected").each(function () {
+                            images_array.push($(this).data('id'));
+                            $("#add-image-container").append('<img class="image" src="' + $(this).attr('src') + '" width="100px" height="100px">');
+                        });
+
+                        $("#product_images").val(images_array.join());
+
+                    });
                 });
             </script>
 

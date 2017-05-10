@@ -36,12 +36,16 @@
         border: 4px solid red;
       }
 
-      .images .image{
+      .images .image, #search-container .media{
         margin: 10px;
       }
 
-      #search-container{
-        padding: 20px 0;
+      #search-container, #add-image-container{
+        padding: 5px 0;
+      }
+
+      #search-container .media{
+
       }
 
     </style>

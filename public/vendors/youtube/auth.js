@@ -38,7 +38,7 @@ function handleAuthResult(authResult) {
     } else {
         // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
         // client flow. The current function is called when that flow completes.
-
+        console.log("YouTube API Error" + authResult.error);
         gapi.auth.authorize({
             client_id: OAUTH2_CLIENT_ID,
             scope: OAUTH2_SCOPES,

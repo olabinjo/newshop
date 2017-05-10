@@ -11,8 +11,10 @@ use App\Store;
 use Session;
 use App\Product;
 use App\Upload;
+use App\Productimage;
 use Redirect;
 use View;
+use DB;
 
 class ProductController extends Controller
 {
@@ -93,11 +95,24 @@ class ProductController extends Controller
 
         $product->save();
 
-        Session::flash('success', 'Your product has been added to the store');
+        if($request->input('product_images') != "") {
+            $id_arr = explode(",", $request->input('product_images'));
 
+            foreach ($id_arr as $id) {
+                $upload = Upload::where('id', $id)->first();
+                $images = new Productimage;
+                $images->filename = $upload->filename;
+                $images->product_id = $product->id;
+                $images->original_filename = $upload->original_filename;
+
+                $images->save();
+            }
+        }
+
+        // Session::flash('success', 'Your product has been added to the store');
+        echo('Your product has been added to the store');
 
         //return redirect()->route('store_name', $store_name);
-
     }
 
     /**

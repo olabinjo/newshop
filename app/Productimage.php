@@ -8,7 +8,7 @@ class Productimage extends Model
 {
     //
 
-     protected $table = 'productimages';
+    protected $table = 'productimages';
 
     protected $fillable = ['is_active',
                                      'is_featured',

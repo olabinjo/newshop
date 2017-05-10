@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::get('products/{store_name}', ['as'=>'store_name', 'uses'=>'ProductController@index']);
 	Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
+	Route::post('product/save', 'ProductController@store');
 
 
 	Route::resource('image', 'ProductImageController');

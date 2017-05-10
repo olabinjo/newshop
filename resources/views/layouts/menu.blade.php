@@ -40,6 +40,10 @@
         margin: 10px;
       }
 
+      #search-container{
+        padding: 20px 0;
+      }
+
     </style>
 
     <script>
@@ -50,6 +54,8 @@
 
   <!-- jQuery -->
   <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
+
+  @yield('scripts')
   </head>
 @if (Auth::guest())
 

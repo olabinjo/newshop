@@ -1,5 +1,9 @@
 @extends('layouts.menu')
 
+@section('scripts')
+
+@endsection
+
 @section('menu')
 
 
@@ -40,7 +44,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="product_name">Product name</label>
                                     <input type="text" size="20" class="form-control col-md-7 col-xs-12"
-                                           name="product_name" placeholder="Name of Product" required="required">
+                                           name="product_name" placeholder="Name of Product" required="required"
+                                           id="product_name">
                                 </div>
 
                                 <br/><br/>
@@ -52,6 +57,7 @@
                                 <input type="hidden" name="storeUserID" value="{{ Auth::user()->id }}">
                                 <input type="hidden" name="store_name" value="{{$store_name}}">
                                 <input type="hidden" name="product_images" value="" id="product_images"/>
+                                <input type="hidden" name="youtube_id" value="" id="youtube_id"/>
                                 {{$store_name}}
 
 
@@ -138,6 +144,18 @@
                                 <br>
                                 <br>
 
+                                <div id="buttons">
+                                    <label>
+                                        <button id="search-button" disabled onclick="search()" type="button"
+                                                class="btn btn-success">
+                                            Search You Tube to embed youtube video
+                                        </button>
+                                    </label>
+                                    <br/><br/>
+                                </div>
+                                <div id="search-container">
+                                </div>
+
 
                                 <input type="submit" name="submit" id="submit" class="btn btn-default" value="draft">
 
@@ -154,7 +172,7 @@
                         <script type="text/javascript">
 
                             $(document).ready(function () {
-                                $('#productform').on('click', function (e) {
+                                $('#productform').on('submit', function (e) {
                                     e.preventDefault();
                                     var data = $('#productform').serialize();
 
@@ -162,8 +180,6 @@
                                 });
 
                                 function saveProductToDB(data) {
-
-                                    console.log("Hello");
                                     $.ajax({
                                         method: "post",
                                         url: "/product/save",
@@ -350,10 +366,37 @@
                     init();
                 }
 
+
+                // After the API loads, call a function to enable the search box.
+                function handleAPILoaded() {
+                    $('#search-button').attr('disabled', false);
+                }
+
+                // Search for a specified string.
+                function search() {
+                    var q = $('#query').val();
+                    var request = gapi.client.youtube.search.list({
+                        q: q,
+                        part: 'snippet'
+                    });
+
+                    request.execute(function (response) {
+                        var str = JSON.stringify(response.result);
+                        $('#search-container').html('<pre>' + str + '</pre>');
+                    });
+                }
+
+            </script>
+
+
+            <script src="{{ asset('vendors/youtube/auth.js')}}"></script>
+            <script src="{{ asset('vendors/youtube/search.js')}}"></script>
+            <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+
+            <script>
                 window.addEventListener('load', function () {
                     init();
                 });
-
             </script>
 
 

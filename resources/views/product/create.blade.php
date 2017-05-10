@@ -396,7 +396,7 @@
                     init();
 
                     $("#add_images_to_product").click(function () {
-                        $("add-image-container").html('');
+                        $("#add-image-container").html('');
                         var images_array = [];
 
                         $(".image.selected").each(function () {

@@ -7,7 +7,7 @@ use Illuminate;
 
 use App\Http\Requests;
 use Auth;
-use App\Store;
+use App\Category;
 use Session;
 use App\Product;
 use App\Upload;
@@ -54,7 +54,9 @@ class ProductController extends Controller
 
         $images = Upload::where('storeUserID', $userID)->get();
 
-        return view('product.create', compact('store_name', 'images'));
+        $categories = Category::where('store_name', $store_name)->get();
+
+        return view('product.create', compact('store_name', 'images', 'categories'));
     }
 
     /**

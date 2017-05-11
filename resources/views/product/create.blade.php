@@ -87,8 +87,16 @@
                                 @endif
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label for="category">Product Category</label>
-                                    <input type="text" name="category" class="form-control input-sm"
-                                           placeholder="category" required="required">
+                                    {{--<input type="text" name="category" class="form-control input-sm"--}}
+                                    {{--placeholder="category" required="required">--}}
+                                    <select required class="form-control" id="select-category" name="category">
+                                        <option value=""></option>
+                                        <option value="+">Add New Category</option>
+
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->name}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <br/>
                                 @if ($errors->has('category'))
@@ -168,10 +176,11 @@
                                 <!--<button type="submit" name="submit" class="btn btn-success" value="publish" >Publish</button>-->
 
 
-                                    <input type="submit" name="submit" id="submit" class="btn btn-default btn-large" value="Draft">
+                                <input type="submit" name="submit" id="submit" class="btn btn-default btn-large"
+                                       value="Draft">
 
-                                    <input type="submit" name="submit" id="productform" class="btn btn-success btn-large"
-                                           value="Publish">
+                                <input type="submit" name="submit" id="productform" class="btn btn-success btn-large"
+                                       value="Publish">
 
                             </div><!--End form group class-->
                         </form> <!--- End form-->
@@ -207,8 +216,6 @@
                             <script>
                                 $(function () {
                                     $('imageModal').modal('show');
-
-
                                 });
 
 
@@ -305,6 +312,114 @@
                                 </div><!--End content in modal-->
                             </div><!--End modal dialog -->
                         </div><!--- End modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" role="dialog" id="add_category">
+                            <div class="modal-dialog">
+
+
+                                <!-- Modal to display User's images and handle upload of new images -->
+                                <div class="modal-content">
+                                    <!-- Start modal's header-->
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add Category</h4>
+                                        {{$store_name}}
+                                    </div>
+                                    <!--End modal's header-->
+                                    <!--Start modal body-->
+                                    <div class="modal-body">
+
+
+                                        {{ csrf_field() }}
+
+                                        <div class="container">
+
+
+                                            <div class="form-group">
+                                                {!!Form::open(array('url'=>'upload/uploadFiles', 'method'=>'Post', 'required'=>'required',  'onsubmit'=>"upload_started()", 'id'=>'add_category_form')) !!}
+
+                                                <input type="hidden" name="store_name" value="{{$store_name}}">
+
+                                                <input type="text" size="20" class="form-control col-md-7 col-xs-12"
+                                                       name="category_name" placeholder="Category" required="required"
+                                                       id="category_name">
+
+                                                <br/><br/>
+                                                {!! Form::submit('Save', array('class'=>'btn btn-success', 'id'=>'add_category_btn')) !!}
+
+
+                                                {!! Form:: close()!!}
+
+                                            </div>
+
+                                            <script type="text/javascript">
+
+                                                $(document).ready(function () {
+                                                    $('#add_category_form').on('submit', function (e) {
+                                                        e.preventDefault();
+                                                        var data = $('#add_category_form').serialize();
+
+                                                        saveCategoryToDB(data);
+                                                    });
+
+                                                    function saveCategoryToDB(data) {
+                                                        $.ajax({
+                                                            method: "post",
+                                                            url: "/category/save",
+                                                            data: data,
+                                                            success: function (response) {
+                                                                $("#select-category").html(response);
+                                                                $("#add_category").modal('hide');
+
+                                                                init();
+                                                            }
+                                                        })
+
+                                                    }
+                                                });
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                    <!--End modal body-->
+
+                                    <!---Start modal footer-->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+
+                                        <br><br/>
+                                    </div>
+                                    <!--End modal footer-->
+                                </div><!--End content in modal-->
+                            </div><!--End modal dialog -->
+                        </div><!--- End modal -->
+
+                        <script type="text/javascript">
+
+                            $(document).ready(function () {
+                                $('#productform').on('submit', function (e) {
+                                    e.preventDefault();
+                                    var data = $('#productform').serialize();
+
+                                    saveProductToDB(data);
+                                });
+
+                                function saveProductToDB(data) {
+                                    $.ajax({
+                                        method: "post",
+                                        url: "/product/save",
+                                        data: data,
+                                        success: function (response) {
+                                            alert(response);
+                                        }
+                                    })
+
+                                }
+                            });
+                        </script>
+
                     </div><!--End panel tile-->
                 </div>
             </div>
@@ -325,6 +440,14 @@
                             }
                         });
                     }
+
+                    $("#select-category").change(function () {
+                        var selectVal = $("#select-category").val();
+                        if (selectVal == "+") {
+                            console.log("Add new cateogy");
+                            $("#add_category").modal('show');
+                        }
+                    });
                 }
 
 

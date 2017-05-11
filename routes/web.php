@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 	Route::post('upload/uploadFiles','uploadController@multiple_upload');
 
 
+	Route::post('category/save', 'CategoryController@save');
 	
 });
 

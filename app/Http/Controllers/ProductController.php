@@ -102,12 +102,14 @@ class ProductController extends Controller
 
             foreach ($id_arr as $id) {
                 $upload = Upload::where('id', $id)->first();
-                $images = new Productimage;
-                $images->filename = $upload->filename;
-                $images->product_id = $product->id;
-                $images->original_filename = $upload->original_filename;
+                if($upload) {
+                    $images = new Productimage;
+                    $images->filename = $upload->filename;
+                    $images->product_id = $product->id;
+                    $images->original_filename = $upload->original_filename;
 
-                $images->save();
+                    $images->save();
+                }
             }
         }
 

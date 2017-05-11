@@ -399,11 +399,11 @@
                         <script type="text/javascript">
 
                             $(document).ready(function () {
-                                $('#productform').on('submit', function (e) {
-                                    e.preventDefault();
+                                $('#productform').unbind('submit').submit(function () {
                                     var data = $('#productform').serialize();
-
                                     saveProductToDB(data);
+
+                                    return false;
                                 });
 
                                 function saveProductToDB(data) {

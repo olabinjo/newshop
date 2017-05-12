@@ -11,6 +11,11 @@
 |
 */
 
+Route::post('/ajax/add-to-cart', 'WebsiteController@addToCart');
+Route::get('/cart', ['as'=>'cart', 'uses'=>'WebsiteController@viewCart']);
+
+Route::get('/{store_name}', 'WebsiteController@productList');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -39,7 +44,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 	Route::get('/home', 'StoreController@index');
 
 
-/*Route below was changed to not conflict with other create methods*/
+	/*Route below was changed to not conflict with other create methods*/
 	Route::get('/{store_name}/creating', 'ProductController@create');
 
 
@@ -59,7 +64,6 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 
 	Route::post('category/save', 'CategoryController@save');
-	
 });
 
 

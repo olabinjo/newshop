@@ -24,6 +24,7 @@
     <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
@@ -52,6 +53,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav  navbar-right">
                         <!-- Authentication Links -->
+                        <li><a href="{{ route('cart') }}">Cart</a></li>
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>

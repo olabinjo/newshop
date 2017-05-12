@@ -107,7 +107,6 @@ class ProductController extends Controller
                     $images->filename = $upload->filename;
                     $images->product_id = $product->id;
                     $images->original_filename = $upload->original_filename;
-
                     $images->save();
                 }
             }

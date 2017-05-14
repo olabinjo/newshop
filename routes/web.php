@@ -14,7 +14,6 @@
 Route::post('/ajax/add-to-cart', 'WebsiteController@addToCart');
 Route::get('/cart', ['as'=>'cart', 'uses'=>'WebsiteController@viewCart']);
 
-Route::get('/{store_name}', 'WebsiteController@productList');
 
 Route::get('/', function () {
     return view('welcome');
@@ -69,7 +68,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 
 
-
+Route::get('/{store_name}', 'WebsiteController@productList');
 
 
 

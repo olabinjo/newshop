@@ -9,6 +9,7 @@ use Response;
 
 use App\Category;
 use App\Product;
+use App\Helper;
 
 
 class WebsiteController extends Controller
@@ -47,12 +48,14 @@ class WebsiteController extends Controller
     }
 
     public function singleProduct($store_name, $category, $product_id){
+        $helper = new Helper();
 
         $products = Product::where('id', $product_id)->get();
         $store_name = $store_name;
         $relateds = Product::where('category', $category)->where('id', '!=' , $product_id)->get();
+        $images = $helper->get_images_by_id($product_id);
 
-        return view('website.single', compact('products', 'store_name', 'relateds'));
+        return view('website.single', compact('products', 'store_name', 'relateds', 'images'));
 
 
     }

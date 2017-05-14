@@ -77,6 +77,8 @@ class ProductController extends Controller
         $product->product_name = $request->input('product_name');
         $product->store_name = $request->input('store_name');
         $product->description = $request->input('description');
+        $product->amount = $request->input('amount');
+        $product->price = $request->input('price');
         $product->category = $request->input('category');
         $product->user_id = Auth::user()->id;
 

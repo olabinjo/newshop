@@ -20,7 +20,7 @@
                             @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
                                                              alt="{{ $product->product_name }}">@endif
                             <div class="caption">
-                                <h3>{{ $product->product_name }}</h3>
+                                <h3><a href="{{$store_name}}/{{$product->id}}">{{ $product->product_name }}</a></h3>
                                 <p>{{ $product->description }}</p>
                                 <p><a href="#" class="btn btn-primary add-to-cart" role="button" data-product="{{ $product }}">Add
                                         to

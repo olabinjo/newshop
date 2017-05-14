@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 
 Route::get('/{store_name}', 'WebsiteController@productList');
+Route::get('/{store_name}/{product_id}', 'WebsiteController@singleProduct');
 
 
 

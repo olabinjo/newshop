@@ -45,4 +45,13 @@ class WebsiteController extends Controller
             session(['cart' => $cart_array]);
         }
     }
+
+    public function singleProduct($store_name, $product_id){
+
+        $products = Product::where('id', $product_id)->get();
+
+        return view('website.single', compact('products'));
+
+
+    }
 }

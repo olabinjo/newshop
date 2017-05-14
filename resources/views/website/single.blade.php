@@ -29,11 +29,9 @@
                     <div class="col-xs-6 col-md-3">
 
 
-                        @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
+                        @foreach($images as $image)<img src="/uploads/{{ $image->original_filename }}"
                                                          alt="{{ $product->product_name }}"
-                                                         class="thumbnail img-responsive"><img
-                                src="/uploads/{{ $productImage[1]->original_filename }}"
-                                alt="{{ $product->product_name }}" class="img-responsive thumbnail">@endif
+                                                         class="thumbnail img-responsive">@endforeach
 
 
                         <p>{{ $product->description }}</p>

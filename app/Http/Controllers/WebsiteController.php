@@ -50,7 +50,7 @@ class WebsiteController extends Controller
 
         $products = Product::where('id', $product_id)->get();
         $store_name = $store_name;
-        $relateds = Product::where('category', $category)->get();
+        $relateds = Product::where('category', $category)->where('id', '!=' , $product_id)->get();
 
         return view('website.single', compact('products', 'store_name', 'relateds'));
 

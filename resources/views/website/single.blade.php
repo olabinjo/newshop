@@ -11,71 +11,65 @@
     </div>
 
     <div class="row">
-  <div class="col-xs-6 col-md-3">
-    <a href="#" class="thumbnail">
-      <img src="..." alt="...">
-    </a>
-  </div>
-  ...
-</div>
+        <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+                <img src="..." alt="...">
+            </a>
+        </div>
+        ...
+    </div>
     <div class="container">
         <div class="row">
-          @foreach($products as $product)
-            <h1>{{ ucwords($store_name) }} - {{ $product->product_name }}</h1>
-            
-                
-                    <?php $productImage = $helper->get_images_by_id($product->id); ?>
-                    <div class="row">
-                     <div class="col-xs-6 col-md-3">
+            @foreach($products as $product)
+                <h1>{{ ucwords($store_name) }} - {{ $product->product_name }}</h1>
 
-                        
-                            @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
-                                                             alt="{{ $product->product_name }}" class="thumbnail img-responsive"><img src="/uploads/{{ $productImage[1]->original_filename }}"
-                                                             alt="{{ $product->product_name }}" class="img-responsive thumbnail">@endif
-                            
-                               
-                                <p>{{ $product->description }}</p>
-                                <p><a href="#" class="btn btn-primary add-to-cart" role="button" data-product="{{ $product }}">Add
-                                        to
-                                        Cart</a></p>
-                            
-                     </div>
-                        
+
+                <?php $productImage = $helper->get_images_by_id($product->id); ?>
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+
+
+                        @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
+                                                         alt="{{ $product->product_name }}"
+                                                         class="thumbnail img-responsive"><img
+                                src="/uploads/{{ $productImage[1]->original_filename }}"
+                                alt="{{ $product->product_name }}" class="img-responsive thumbnail">@endif
+
+
+                        <p>{{ $product->description }}</p>
+                        <p><a href="#" class="btn btn-primary add-to-cart" role="button" data-product="{{ $product }}">Add
+                                to
+                                Cart</a></p>
+
                     </div>
-                @endforeach
-            
-        
+
+                </div>
+            @endforeach
+
+
         </div>
     </div>
 
     <div class="container">
 
-    <h4>Related Products</h4>
+        <h4>Related Products</h4>
 
-    @foreach($relateds as $related)
+        @foreach($relateds as $related)
+            <?php $productImage = $helper->get_images_by_id($related->id); ?>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
+                                                     alt="{{ $related->product_name }}">@endif
+                    <div class="caption">
+                        <h3>
+                            <a href="{{$store_name}}/{{$related->category}}/{{$related->id}}">{{ $product->product_name }}</a>
+                        </h3>
+                        <h3>{{ $product->price }}</h3>
 
-    @if ({{$related->id}} == {{$product->id}})
-
-    "Hidden"
-
-
-    else 
-
-    <?php $productImage = $helper->get_images_by_id($related->id); ?>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
-                                                             alt="{{ $related->product_name }}">@endif
-                            <div class="caption">
-                                <h3><a href="{{$store_name}}/{{$related->category}}/{{$related->id}}">{{ $product->product_name }}</a></h3>
-                                <h3>{{ $product->price }}</h3>
-                                
-                            </div>
-                        </div>
                     </div>
-
-    @endif
-    @endforeach
+                </div>
+            </div>
+        @endforeach
 
     </div>
 

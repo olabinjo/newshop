@@ -46,11 +46,13 @@ class WebsiteController extends Controller
         }
     }
 
-    public function singleProduct($store_name, $product_id){
+    public function singleProduct($store_name, $category, $product_id){
 
         $products = Product::where('id', $product_id)->get();
+        $store_name = $store_name;
+        $relateds = Product::where('category', $category)->get();
 
-        return view('website.single', compact('products'));
+        return view('website.single', compact('products', 'store_name', 'relateds'));
 
 
     }

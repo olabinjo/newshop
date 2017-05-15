@@ -22,8 +22,11 @@ class SettingsController extends Controller
         return view('settings.edit', compact('users'));
     }
 
-    public function save(Request $request){
-
-
+    public function save(Request $request)
+    {
+        //
+        $upt = Auth::user()->id;
+        $upt->update($request->all());
+       
     }
 }

@@ -12,6 +12,7 @@
 */
 
 Route::post('/ajax/add-to-cart', 'WebsiteController@addToCart');
+Route::get('/ajax/order', 'WebsiteController@order');
 Route::get('/cart', ['as'=>'cart', 'uses'=>'WebsiteController@viewCart']);
 
 

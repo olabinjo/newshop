@@ -15,7 +15,7 @@
             <div class="row">
                 <?php $price = 0; ?>
                 @foreach($cart as $c)
-                        <?php $price += $c->price; ?>
+                    <?php $price += $c->price; ?>
                     <?php $productImage = $helper->get_images_by_id($c->id); ?>
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -42,11 +42,13 @@
                         $("#checkout_modal").modal('show');
                     }
                     function payWithPaystack() {
+                        var d = new Date();
+                        var n = d.getTime();
                         var handler = PaystackPop.setup({
                             key: 'pk_test_f910bca3507b8df0e2e652ff8237034cbd6be765',
-                            email: 'customer@email.com',
-                            amount: '<?php echo ($price * 100) ?>',
-                            ref: "jjsiksiskk",
+                            email: $("#buyer_email").val(),
+                            amount: '<?php echo($price * 100) ?>',
+                            ref: n,
                             metadata: {
                                 custom_fields: [
                                     {
@@ -57,7 +59,15 @@
                                 ]
                             },
                             callback: function (response) {
-                                alert('success. transaction ref is ' + response.reference);
+                                var ref = response.reference;
+                                $.ajax({
+                                    method: "get",
+                                    url: "/ajax/order",
+                                    success: function (response) {
+                                        alert('success. transaction ref is ' + ref);
+                                        $("#checkout_modal").modal('hide');
+                                    }
+                                });
                             },
                             onClose: function () {
                                 alert('window closed');

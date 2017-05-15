@@ -83,12 +83,7 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
 
 
-        /*$product->product_name = $request->product_name;
-        $product->store_name = $request->store_name;
-        $store_name=$request->store_name;
-        $product->description = $request->description;
-        $product->category = $request->category;
-        $product->user_id= Auth::user()->id;*/
+        
 
         if ($request->submit == 'draft') {
             $product->status = 'draft';

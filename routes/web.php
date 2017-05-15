@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::resource('/stores', 'StoreController');
 
-	Route::get('/settings', 'SettingsController@index');
+	Route::post('/settings', 'SettingsController@index');
 
 	Route::post('/settings/save', 'SettingsController@save');
 

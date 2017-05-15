@@ -13,7 +13,9 @@
         <h1>My Cart</h1>
         <div class="wrapper">
             <div class="row">
+                <?php $price = 0; ?>
                 @foreach($cart as $c)
+                        <?php $price += $c->price; ?>
                     <?php $productImage = $helper->get_images_by_id($c->id); ?>
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -26,9 +28,106 @@
                         </div>
                     </div>
                 @endforeach
+
+                <div>
+                    <button type="button" class="btn btn-danger" onclick="checkout()"> Checkout</button>
+                </div>
+
+                <form>
+                    <script src="https://js.paystack.co/v1/inline.js"></script>
+                </form>
+
+                <script>
+                    function checkout() {
+                        $("#checkout_modal").modal('show');
+                    }
+                    function payWithPaystack() {
+                        var handler = PaystackPop.setup({
+                            key: 'pk_test_f910bca3507b8df0e2e652ff8237034cbd6be765',
+                            email: 'customer@email.com',
+                            amount: '<?php echo ($price * 100) ?>',
+                            ref: "jjsiksiskk",
+                            metadata: {
+                                custom_fields: [
+                                    {
+                                        display_name: "Mobile Number",
+                                        variable_name: "mobile_number",
+                                        value: "+2348012345678"
+                                    }
+                                ]
+                            },
+                            callback: function (response) {
+                                alert('success. transaction ref is ' + response.reference);
+                            },
+                            onClose: function () {
+                                alert('window closed');
+                            }
+                        });
+                        handler.openIframe();
+                    }
+                </script>
             </div>
         </div>
     </div>
+
+
+    <!-- Modal -->
+    <div id="checkout_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal to display User's images and handle upload of new images -->
+            <div class="modal-content" id="checkout_modal_content">
+                <!-- Start modal's header-->
+                <div class="modal-header">
+                    <h4 class="modal-title">Details</h4>
+                </div>
+                <!--End modal's header-->
+                <!--Start modal body-->
+                <div class="modal-body">
+
+                    {{ csrf_field() }}
+
+                    <div class="container">
+                        <form id="pay" method="post">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="product_name">Name</label>
+                                    <input type="text" size="20" class="form-control"
+                                           name="buyer_name" placeholder="Name" required="required"
+                                           id="buyer_name">
+
+                                    <label for="product_name">Email</label>
+                                    <input type="text" size="20" class="form-control"
+                                           name="buyer_email" placeholder="Email" required="required"
+                                           id="buyer_email">
+
+                                    <label for="product_name">Phone Number</label>
+                                    <input type="text" size="20" class="form-control"
+                                           name="buyer_phone_number" placeholder="Phone Number" required="required"
+                                           id="buyer_phone_number">
+
+
+                                    <button type="button" class="btn btn-danger" onclick="payWithPaystack()"> Pay
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!--End modal body-->
+
+                <!---Start modal footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+
+                    <br><br/>
+                </div>
+                <!--End modal footer-->
+            </div><!--End content in modal-->
+        </div><!--End modal dialog -->
+    </div><!--- End modal -->
+
 
     <div class="container marketing">
         <!-- FOOTER -->

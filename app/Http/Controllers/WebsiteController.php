@@ -12,6 +12,7 @@ use App\Category;
 use App\Order;
 use App\Product;
 use App\Helper;
+use App\User;
 
 
 class WebsiteController extends Controller
@@ -20,10 +21,21 @@ class WebsiteController extends Controller
 
     public function productList($store_name)
     {
-        $products = Product::where('store_name', $store_name)->get();
+        $products = Product::where('store_name', $store_name)->orderBy('updated_at', 'desc')->paginate(10);
+        $categorys = Category::where('store_name', $store_name)->get();
         $store_name = $store_name;
 
-        return view('website.products', compact('store_name', 'products'));
+        return view('website.products', compact('store_name', 'products', 'categorys'));
+    }
+
+    public function categoryProduct($store_name, $category)
+    {
+        $products = Product::where('store_name', $store_name)->where('category', '=', $category)->orderBy('updated_at', 'desc')->paginate(10);
+        $categorys = Category::where('store_name', $store_name)->get();
+        $store_name = $store_name;
+
+        return view('website.category', compact('store_name', 'products', 'categorys'));
+
     }
 
 
@@ -54,12 +66,15 @@ class WebsiteController extends Controller
     {
         $helper = new Helper();
 
+        $userID = Product::where('store_name', $store_name)->value('user_id');
+
         $products = Product::where('id', $product_id)->get();
         $store_name = $store_name;
-        $relateds = Product::where('category', $category)->where('id', '!=', $product_id)->get();
+        $relateds = Product::where('category', $category)->where('id', '!=', $product_id)->where('user_id', '=', $userID)->get();
+        $categorys = Category::where('store_name', $store_name)->get();
         $images = $helper->get_images_by_id($product_id);
 
-        return view('website.single', compact('products', 'store_name', 'relateds', 'images'));
+        return view('website.single', compact('products', 'store_name', 'relateds', 'images', 'categorys'));
 
 
     }

@@ -58,7 +58,7 @@
                                 <input type="hidden" name="store_name" value="{{$store_name}}">
                                 <input type="hidden" name="product_images" value="" id="product_images"/>
                                 <input type="hidden" name="youtube_id" value="" id="youtube_id"/>
-                                {{$store_name}}
+                                
 
 
                                 <br/><br/>
@@ -237,7 +237,7 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title">Your Images</h4>
-                                        {{$store_name}}
+                                       
                                     </div>
                                     <!--End modal's header-->
                                     <!--Start modal body-->
@@ -324,7 +324,7 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title">Add Category</h4>
-                                        {{$store_name}}
+                                        
                                     </div>
                                     <!--End modal's header-->
                                     <!--Start modal body-->

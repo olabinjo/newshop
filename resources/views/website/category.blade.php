@@ -6,7 +6,7 @@
     <div class="container"> 
     <div class="navbar-wrapper">
     <ul class="nav nav-pills">
-    <li role="presentation"><a href="#" class="active">Home</a></li>
+    <li role="presentation"><a href="/{{$store_name}}" class="active">Home</a></li>
     @foreach($categorys as $category)
     <li role="presentation" ><a href="/{{$category->store_name}}/{{$category->name}}/">{{$category->name}}</a>      </li>
         @endforeach
@@ -30,7 +30,7 @@
                             @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
                                                              alt="{{ $product->product_name }}">@endif
                             <div class="caption">
-                                <h3><a href="{{$store_name}}/{{$product->category}}/{{$product->id}}">{{ $product->product_name }}</a></h3>
+                                <h3><a href="/{{$store_name}}/{{$product->category}}/{{$product->id}}">{{ $product->product_name }}</a></h3>
                                 <p>{{ $product->description }}</p>
                                 <p>{{$product->price}}</p>
                             </div>

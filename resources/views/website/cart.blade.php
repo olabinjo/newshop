@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.storemenu')
 <?php $helper = new App\Helper(); ?>
 @section('content')
 

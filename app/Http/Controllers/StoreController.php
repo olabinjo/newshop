@@ -76,7 +76,21 @@ class StoreController extends Controller
         
         Session::flash('success', 'Your store has been created');
 
-        return redirect()->view('home');
+        $id = Auth::user()->id;
+        $user = Auth::user();
+
+         $products = Product::where('user_id', $id)->count();
+        $orders = Order::where('store_user_id', $id)->count();
+        $revenue = Order::where('store_user_id', $id)->sum('price');
+        $storecount = $user->store()->count();
+
+      
+        
+        $stores = $user->store()->get();
+
+
+        
+        return view('store.index' , compact('stores', 'products', 'orders', 'revenue','storecount'));
     }
 
     /**

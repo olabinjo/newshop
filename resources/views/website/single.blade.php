@@ -1,23 +1,26 @@
-@extends('layouts.app')
+@extends('layouts.storemenu')
 <?php $helper = new App\Helper(); ?>
 @section('content')
 
     <body>
+    <div class="container"> 
     <div class="navbar-wrapper">
-        <div class="container">
+    <ul class="nav nav-pills">
+    <li role="presentation"><a href="/{{$store_name}}" class="active">Home</a></li>
+    @foreach($categorys as $category)
+    <li role="presentation" ><a href="/{{$category->store_name}}/{{$category->name}}/">{{$category->name}}</a>      </li>
+        @endforeach
+            </ul>
+        
+
+        
 
 
-        </div>
+        
+    </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="..." alt="...">
-            </a>
-        </div>
-        ...
-    </div>
+    
     <div class="container">
         <div class="row">
             @foreach($products as $product)
@@ -25,21 +28,41 @@
 
 
                 <?php $productImage = $helper->get_images_by_id($product->id); ?>
-                <div class="row">
-                    <div class="col-xs-6 col-md-3">
+                
+                    <div class="col-xs-4 col-md-2">
 
+                     
 
+                     <div class="row"> 
                         @foreach($images as $image)<img src="/uploads/{{ $image->original_filename }}"
                                                          alt="{{ $product->product_name }}"
-                                                         class="thumbnail img-responsive">@endforeach
+                                                         class="thumbnail img-responsive img-circle" width="300px" height="300px">
+                     </div>    
+                     @endforeach 
 
 
-                        <p>{{ $product->description }}</p>
-                        <p><a href="#" class="btn btn-primary add-to-cart" role="button" data-product="{{ $product }}">Add
+                     <iframe width="854" height="480" src="https://www.youtube.com/embed/{{$product->youtube_id}}" frameborder="0" allowfullscreen></iframe>
+
+                 <div class="container">                                   
+
+                    <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{$product->product_name}}</h3>
+  </div>
+  <div class="panel-body">
+    {{ $product->description }}
+    <p>Price: GHC {{$product->price}}</p>
+  </div>
+
+  <p><a href="#" class="btn btn-primary add-to-cart" role="button" data-product="{{ $product }}">Add
                                 to
                                 Cart</a></p>
+</div>
 
-                    </div>
+</div> 
+                        
+
+                   
 
                 </div>
             @endforeach
@@ -47,6 +70,10 @@
 
         </div>
     </div>
+
+    <br/>
+    <br/>
+    <span></span>
 
     <div class="container">
 
@@ -58,11 +85,13 @@
                 <div class="thumbnail">
                     @if(isset($productImage[0]))<img src="/uploads/{{ $productImage[0]->original_filename }}"
                                                      alt="{{ $related->product_name }}">@endif
+
+
                     <div class="caption">
                         <h3>
-                            <a href="{{$store_name}}/{{$related->category}}/{{$related->id}}">{{ $product->product_name }}</a>
+                            <a href="/{{$store_name}}/{{$related->category}}/{{$related->id}}">{{ $product->product_name }}</a>
                         </h3>
-                        <h3>{{ $product->price }}</h3>
+                        <h3>Price: GHC{{ $product->price }}</h3>
 
                     </div>
                 </div>
@@ -87,7 +116,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="../../assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

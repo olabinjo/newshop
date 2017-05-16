@@ -57,6 +57,16 @@
 
                  <tbody>
 
+                 @if(count($products)==0)
+
+                 <p>You have no products in your store. Please create products and add them to your store</p>
+
+
+
+                 @else
+
+
+
 
 
                  @foreach($products as $product)
@@ -83,7 +93,7 @@
                  </tr>
                  @endforeach
                  	
-
+             
 
                  </tbody>
 
@@ -168,7 +178,7 @@
                                                     }
                                                 });
                                             </script>
-
+@endif
                  
 
 

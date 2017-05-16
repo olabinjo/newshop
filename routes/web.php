@@ -27,9 +27,7 @@ Auth::routes();
 
 
 
-Route::get('/settings', function () {
-    return view('welcome');
-});
+
 
 
 
@@ -77,7 +75,9 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 
 Route::get('/{store_name}', 'WebsiteController@productList');
+Route::get('/{store_name}/{category}', 'WebsiteController@categoryProduct');
 Route::get('/{store_name}/{category}/{product_id}', 'WebsiteController@singleProduct');
+
 
 
 

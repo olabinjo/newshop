@@ -102,34 +102,24 @@ include ('auth.register.blade.php');
                   <li><a href="/home"><i class="fa fa-home"></i> Dashboard<span class="fa fa-chevron"></span></a>
                     
                   </li>
-                  <li><a href="/products"><i class="fa fa-edit"></i>Products <span class="fa fa-chevron-down"></span></a>
+                  <li><a href="#"><i class="fa fa-edit"></i>Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">ALL Products</a></li>
                       <li><a href="form_advanced.html">Published Products</a></li>
                       <li><a href="form_validation.html">Draft Products</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Orders <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      
-                    </ul>
+                  <li><a href="/orders"><i class="fa fa-money"></i> Orders <span class="fa fa-chevron-down"></span></a>
+                    
                   </li>
                   
-                  <li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
-                    </ul>
+                  <li><a><i class="fa fa-file-image-o"></i> Images <span class="fa fa-chevron-down"></span></a>
+                    
                   </li>
-                  <li><a><i class="fa fa-clone"></i>Theme <span class="fa fa-chevron-down"></span></a>
+                  <li><a href="/settings"><i class="fa fa-wrench"></i>Settings <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Basic</a></li>
-                      <li><a href="fixed_footer.html">Basic Plus</a></li>
+                      <li><a href="/settings/profile">Profile Settings</a></li>
+                      <li><a href="/settings/store">Store Settings</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -160,12 +150,14 @@ include ('auth.register.blade.php');
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="javascript:;"> Profile</a></li>
                     <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
+                      <a href="/settings">
+                        
                         <span>Settings</span>
                       </a>
                     </li>
-                    <li><a href="javascript:;">User Manual</a></li>
+                    <li><a href="/home">Dashboard</a></li>
+                    <li><a href="/orders">Orders</a></li>
+                    <li><a href="/images">Images</a></li>
                     <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -177,70 +169,7 @@ include ('auth.register.blade.php');
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
+                
               </ul>
             </nav>
           </div>

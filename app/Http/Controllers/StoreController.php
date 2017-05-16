@@ -9,6 +9,9 @@ use App\Http\Requests;
 use Auth;
 use App\Store;
 use Session;
+use App\Product;
+use App\Order;
+
 
 
 class StoreController extends Controller
@@ -20,21 +23,22 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
-
-       
-
-        /*$savedStore = Store::where('user_id', '1')->get();
-
-        return View::make('home')->with('savedStores', $savedStore);*/
-
-        //$user = Auth::user();
         
+        $id = Auth::user()->id;
         $user = Auth::user();
+
+        $products = Product::where('user_id', $id)->count();
+        $orders = Order::where('store_user_id', $id)->count();
+        $revenue = Order::where('store_user_id', $id)->sum('price');
+        $storecount = $user->store()->count();
+
+      
         
         $stores = $user->store()->get();
+
+
         
-        return view('store.index' , compact('stores'));
+        return view('store.index' , compact('stores', 'products', 'orders', 'revenue','storecount'));
 
      
     }

@@ -46,6 +46,7 @@
                 <th>Product Name</th>
                 <th>Product Price</th>
                 <th>Category</th>
+                <th>Quantity</th>
                 <th>Date Updated</th>
                 <th>Date Created</th>
                 <th>Status</th>
@@ -72,7 +73,11 @@
                  <td>{{$product-> updated_at}} </td>
                  <td>{{$product-> created_at}} </td>
                  <td>{{$product-> status}} </td>
-                 <td><a href="{{url('product/'.$store_name.'/'.$product->id.'/edit')}}" class="btn btn-warning"><span class="fa fa-edit"></span></a></td>
+                 <td><a href="{{url('product/'.$product->id.'/edit')}}" class="btn btn-warning"><span class="fa fa-edit"></span></a></td>
+                 <td>
+                 <button class="delete-modal btn btn-danger" data-id="{{$product->id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-trash"></span>DELETE </button>
+                 </td>
+                 
 
 
                  </tr>
@@ -85,6 +90,84 @@
 
 
                 </table>
+
+                {{ $products->links() }}
+
+                <!-- Modal -->
+                                        <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+
+                                          <!-- Modal Storeform to collect and save store name -->
+                                          <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    
+                                                </div>
+                                            <div class="modal-body">
+
+                                                <form id="delete-form" class="form-horizontal" method="POST" role="form" >
+                                                      {{ csrf_field() }}
+                                                  <p>Are you sure you want to delete this product </p>
+
+                                                  <input type="text" name="" value="{{$product->id}}">
+
+
+                                                  <div class="form-group">
+                                                      
+                                                     
+                                                          <input type="hidden" class="form-control" name="id" value="{{ $product->id}}">
+                                                          <input type="hidden" name="store_name" value="{{$product->store_name}}">
+
+                                                          <button type="submit" class="btn btn-danger" >DELETE</button>
+
+                                                <button type="button" class="btn btn-success" data-dismiss="modal">CANCEL</button>
+                                                  </div>
+    
+                                                </form>
+
+                                                
+        
+                                            </div>
+                                            <div class="modal-footer">
+                                      
+                                        </div>
+                                    </div>
+                                  </div>
+                            <!--  End of Modal-->
+
+                            <script type="text/javascript">
+
+                                                $(document).ready(function () {
+                                                    $('#delete-form').on('submit', function (e) {
+                                                        e.preventDefault();
+                                                        var data = $('#delete-form').serialize();
+
+                                                        deleteProduct(data);
+                                                    });
+
+                                                    $('#delete-modal').on('click', function(e){
+
+                                                      $("#id" == "{{$product->id}}")
+
+
+                                                    })
+
+                                                    function deleteProduct(data) {
+                                                        $.ajax({
+                                                            method: "post",
+                                                            url: "/product/destroy",
+                                                            data: data,
+                                                            success: function (response) {
+                                                                
+                                                                $("#myModal").modal('hide');
+
+                                                                init();
+                                                            }
+                                                        })
+
+                                                    }
+                                                });
+                                            </script>
 
                  
 

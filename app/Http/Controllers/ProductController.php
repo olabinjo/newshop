@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Facades;
 use Illuminate;
 
 use App\Http\Requests;
@@ -13,6 +14,8 @@ use App\Product;
 use App\Upload;
 use App\Productimage;
 use Redirect;
+use Response;
+use Validator;
 use View;
 use DB;
 
@@ -28,7 +31,7 @@ class ProductController extends Controller
     {
 
 
-        $products = Product::where('store_name', $store_name)->get();
+        $products = Product::where('store_name', $store_name)->orderBy('updated_at', 'desc')->paginate(10);
 
 
         $store_name = $store_name;
@@ -80,6 +83,7 @@ class ProductController extends Controller
         $product->amount = $request->input('amount');
         $product->price = $request->input('price');
         $product->category = $request->input('category');
+        $product->youtube_id = $request->input('youtube_id');
         $product->user_id = Auth::user()->id;
 
 
@@ -132,15 +136,19 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, $store_name)
+    public function edit($id)
     {
         //
 
 
         $product = Product::find($id);
-        $store_name = $store_name;
 
-        return view('product.edit', compact('product', 'store_name'));
+        $categories = Category::where('store_name', $product->store_name)->get();
+
+        $images = Upload::where('storeUserID', $product->user_id)->get();
+        
+
+        return view('product.edit', compact('product', 'categories', 'images'));
     }
 
     /**
@@ -153,6 +161,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $upt = Product::find($id);
+        $upt->update($request->all());
     }
 
     /**
@@ -161,9 +172,14 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $store_name = $request->store_name;
+        $id = $request->id;
+        Product::find($id)->delete();
+        
+         //return response()->json();
     }
 
     public function draft(Request $request)

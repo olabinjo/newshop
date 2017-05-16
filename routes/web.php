@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'] ,function(){
 
 	Route::resource('/stores', 'StoreController');
 
-	Route::post('/settings', 'SettingsController@index');
+	Route::get('/settings', 'SettingsController@index');
 
 	Route::post('/settings/save', 'SettingsController@save');
 
@@ -52,12 +52,15 @@ Route::group(['middleware' => 'auth'] ,function(){
 	Route::get('/{store_name}/creating', 'ProductController@create');
 
 
-	Route::resource('product', 'ProductController');
+	//Route::resource('product', 'ProductController');
 
 	
 
 	Route::get('products/{store_name}', ['as'=>'store_name', 'uses'=>'ProductController@index']);
-	Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
+	//Route::get('product/{store_name}/{id}/edit', 'ProductController@edit');
+	Route::post('product/{id}/update', 'ProductController@update');
+
+	Route::post('product/destroy', 'ProductController@destroy');
 	Route::post('product/save', 'ProductController@store');
 
 
